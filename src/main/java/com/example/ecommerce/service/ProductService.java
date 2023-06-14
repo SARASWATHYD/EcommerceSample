@@ -3,9 +3,7 @@ package com.example.ecommerce.service;
 import com.example.ecommerce.businessobject.Order;
 import com.example.ecommerce.businessobject.Product;
 import com.example.ecommerce.repository.ProductRepository;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
 import java.util.logging.Logger;

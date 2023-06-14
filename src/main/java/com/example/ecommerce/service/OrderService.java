@@ -23,7 +23,11 @@ public class OrderService {
     }
 
     public Order getOrderDetails(int id) {
-       return orderRepository.getOrderById(id);
+        Order order = orderRepository.getOrderById(id);
+        if(order==null){
+            throw new IllegalArgumentException("Order Not Found::"+id);
+        }
+        return order;
     }
 
 

@@ -2,7 +2,6 @@ package com.example.ecommerce.service;
 
 import com.example.ecommerce.businessobject.Order;
 import com.example.ecommerce.businessobject.Product;
-import com.example.ecommerce.repository.OrderRepository;
 import com.example.ecommerce.repository.ProductRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,9 +15,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class OrderServiceTest {
-
-    @Mock
-    private OrderRepository orderRepository;
 
     @Mock
     private ProductRepository productRepository;
