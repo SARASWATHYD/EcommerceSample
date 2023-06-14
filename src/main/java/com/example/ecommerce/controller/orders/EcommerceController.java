@@ -1,4 +1,4 @@
-package com.example.ecommerce.controller;
+package com.example.ecommerce.controller.orders;
 
 import com.example.ecommerce.businessobject.ErrorResponse;
 import com.example.ecommerce.businessobject.OrderRequest;
@@ -9,14 +9,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @Validated
-@RequestMapping("/v1/ecommerce")
+@RequestMapping("api/v1/ecommerce")
 public class EcommerceController {
 
     private final EcommerceService ecommerceService;
@@ -27,11 +31,6 @@ public class EcommerceController {
 
     @PostMapping
     public Response processOrder(@Validated @RequestBody OrderRequest orderRequest) {
-        System.out.println(
-                "req::"+orderRequest.getOrder().getProducts().get(0).getPrice()
-
-        );
-
         return ecommerceService.processRequest(orderRequest);
     }
 
@@ -53,5 +52,4 @@ public class EcommerceController {
         ErrorResponse errorResponse = new ErrorResponse("Invalid Argument", List.of(ex.getMessage()));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
-
 }

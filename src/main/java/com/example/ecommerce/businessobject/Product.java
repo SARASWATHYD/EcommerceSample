@@ -5,12 +5,14 @@ import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.validation.annotation.Validated;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Validated
+@ToString
 public class Product {
 
     private int id;
@@ -18,6 +20,6 @@ public class Product {
     @PositiveOrZero(message = "Price must be non-negative")
     private BigDecimal price;
     private int quantity;
-
+    private ProductType productType;
 }
 

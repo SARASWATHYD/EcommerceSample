@@ -2,7 +2,6 @@ package com.example.ecommerce.repository;
 
 import com.example.ecommerce.businessobject.Order;
 import org.springframework.stereotype.Repository;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +16,10 @@ public class OrderRepository {
         orders = new HashMap<>();
     }
 
-    public void addOrder(Order order) {
+    public Order addOrder(Order order) {
+        order.setId(orders.size() + 1);
         orders.put(order.getId(), order);
+        return order;
     }
 
     public Order getOrderById(int id) {

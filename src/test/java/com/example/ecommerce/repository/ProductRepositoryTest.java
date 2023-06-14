@@ -1,6 +1,7 @@
 package com.example.ecommerce.repository;
 
 import com.example.ecommerce.businessobject.Product;
+import com.example.ecommerce.businessobject.ProductType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,8 +21,8 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void addProductReturnProduct(){
-        Product product = new Product(1, "Juice",new BigDecimal(30),5);
+    public void validateSavedProduct(){
+        Product product = new Product(1, "Juice",new BigDecimal(30),5, ProductType.BOOK);
         productRepository.addProduct(product);
         Product actualProduct = productRepository.getProductById(1);
         Assertions.assertNotNull(actualProduct);
@@ -30,13 +31,8 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void getProductIdReturnProduct(){
-        Product product = new Product(1, "Juice",new BigDecimal(30),5);
-        productRepository.addProduct(product);
-        Product actualProduct = productRepository.getProductById(1);
-        Assertions.assertNotNull(actualProduct);
-        Assertions.assertEquals(product.getId(), actualProduct.getId());
-        Assertions.assertEquals(product.getName(), actualProduct.getName());
+    public void getProductByID_Invalid(){
+        Product product = productRepository.getProductById(165);
+        Assertions.assertNull(product);
     }
-
 }

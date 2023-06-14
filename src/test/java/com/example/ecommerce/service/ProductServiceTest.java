@@ -2,27 +2,29 @@ package com.example.ecommerce.service;
 
 import com.example.ecommerce.businessobject.Order;
 import com.example.ecommerce.businessobject.Product;
+import com.example.ecommerce.businessobject.ProductType;
 import com.example.ecommerce.repository.ProductRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
 import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductServiceTest {
-    @Mock
-    private ProductRepository productRepository;
+    private ProductRepository productRepository = new ProductRepository();
 
-    @InjectMocks
-    private ProductService productService;
+    private ProductService productService = new ProductService(productRepository);
+    private Product product;
+
+    private int PRODUCT_ID = 123;
+
+    private String PRODUCT_NAME = "MysteryBook";
 
     @BeforeEach
     void setUp() {
+        product = new Product(PRODUCT_ID, PRODUCT_NAME, new BigDecimal(15),75, ProductType.BOOK);
+        productService.addProduct(product);
         MockitoAnnotations.openMocks(this);
     }
 
@@ -30,72 +32,48 @@ public class ProductServiceTest {
 
     @Test
     public void givenProductIdReturnProduct() {
-        int productId = 123;
-        Product expectedProduct = new Product(productId, "Jucie", new BigDecimal(15),15);
 
-        Mockito.when(productRepository.getProductById(productId)).thenReturn(expectedProduct);
-
-        Product actualProduct= productService.getProduct(productId);
-
+        Product actualProduct= productService.getProduct(123);
         Assertions.assertNotNull(actualProduct);
-        Assertions.assertEquals(expectedProduct.getId(), actualProduct.getId());
-        Assertions.assertEquals(expectedProduct.getName(), actualProduct.getName());
+        Assertions.assertEquals(123, actualProduct.getId());
+        Assertions.assertEquals(PRODUCT_NAME, actualProduct.getName());
 
-        Mockito.verify(productRepository, Mockito.times(1)).getProductById(productId);
     }
 
     @Test
     public void addProduct_givenProductIdReturnProduct() {
-        int productId = 12343;
-        Product product = new Product(productId, "Jucie", new BigDecimal(15),15);
+
+        Product product = new Product(456, "new", new BigDecimal(15),85, ProductType.BOOK);
         productService.addProduct(product);
-        Mockito.when(productRepository.getProductById(productId)).thenReturn(product);
-
-        Product actualProduct= productService.getProduct(productId);
-
+        Product actualProduct= productService.getProduct(456);
         Assertions.assertNotNull(actualProduct);
         Assertions.assertEquals(product.getId(), actualProduct.getId());
         Assertions.assertEquals(product.getName(), actualProduct.getName());
-        Mockito.verify(productRepository, Mockito.times(1)).addProduct(
-                product);
     }
 
     @Test
     public void updateQuantity_givenProductIdReturnProduct_UnavailableProduct() {
-        int productId = 123;
-        Product product = new Product(productId, "Jucie", new BigDecimal(115),15);
+        Product  product = new Product(4567, "no", new BigDecimal(15),15, ProductType.BOOK);
         Assertions.assertThrows(IllegalArgumentException.class,()->productService.updateQuantity( new Order(12, List.of(product))),
-                "Product 123 is not available");
-        Mockito.verify(productRepository, Mockito.times(1)).getProductById(
-                productId);
-        Mockito.verify(productRepository, Mockito.times(0)).addProduct(
-                product);
+                "Product 4567 is not available");
     }
 
     @Test
     public void updateQuantity_givenProductIdReturnProduct() {
-        int productId = 123;
-        Product product = new Product(productId, "Jucie", new BigDecimal(115),15);
-        Mockito.when(productRepository.getProductById(productId)).thenReturn(product);
+        Product product = new Product(PRODUCT_ID, PRODUCT_NAME, new BigDecimal(115),15, ProductType.BOOK);
         productService.updateQuantity( new Order(12, List.of(product)));
-        Mockito.verify(productRepository, Mockito.times(1)).getProductById(
-                productId);
-        Mockito.verify(productRepository, Mockito.times(1)).addProduct(
-                product);
+        Product actualProduct= productService.getProduct(PRODUCT_ID);
+        Assertions.assertNotNull(actualProduct);
+        Assertions.assertEquals(product.getId(), actualProduct.getId());
+        Assertions.assertEquals(product.getName(), actualProduct.getName());
+        Assertions.assertEquals(60, actualProduct.getQuantity());
+
     }
 
     @Test
     public void updateQuantity_givenProductIdReturnProduct_MaxQuantityProduct() {
-        int productId = 123;
-        Product product = new Product(productId, "Jucie", new BigDecimal(115),15);
-        Mockito.when(productRepository.getProductById(productId)).thenReturn(product);
-        Product orderedProduct = new Product(productId, "Jucie", new BigDecimal(115),75);
-
+        Product orderedProduct = new Product(PRODUCT_ID, PRODUCT_NAME, new BigDecimal(115),90, ProductType.BOOK);
         Assertions.assertThrows(IllegalArgumentException.class,()->productService.updateQuantity( new Order(75, List.of(orderedProduct))),
                 "Ordered item Quantity are unavailable in stock");
-        Mockito.verify(productRepository, Mockito.times(1)).getProductById(
-                productId);
-        Mockito.verify(productRepository, Mockito.times(0)).addProduct(
-                product);
     }
 }

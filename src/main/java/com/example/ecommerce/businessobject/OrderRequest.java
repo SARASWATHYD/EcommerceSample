@@ -10,7 +10,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
-
 public class OrderRequest implements Response{
 
     private int type;
