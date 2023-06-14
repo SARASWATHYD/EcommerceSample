@@ -12,6 +12,14 @@
 2. Build the project using Maven ```mvn clean install```
 3. Run the application ```java -jar Ecommerce-<REPLACE VERSION ID>-SNAPSHOT.jar```
 
+## Payload structure
+
+type : int 
+
+length: int
+
+order: [Order.java](https://github.com/SARASWATHYD/EcommerceSample/blob/master/src/main/java/com/example/ecommerce/businessobject/Order.java)
+
 ## API Documentation
 
 **URL**   `api/v1/ecommerce`
