@@ -23,21 +23,21 @@ public class EcommerceServiceTest {
 
     @BeforeEach
     void setUp() {
-        Product orderedProduct = new Product(1234, "Jucie", new BigDecimal(115),10, ProductType.BOOK);
+        Product orderedProduct = new Product(1234, "Juice", new BigDecimal(115),10, ProductType.BOOK);
         order = new Order(75, List.of(orderedProduct));
 
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void processRequest_givenInvalidExpectedException(){
+    public void processRequestGivenInvalidType(){
         OrderRequest orderRequest = OrderRequest.builder().type(6).order(order).build();
         Assertions.assertThrows(IllegalArgumentException.class,
                 ()->ecommerceService.processRequest(orderRequest),"Unexpected value: 6");
     }
 
     @Test
-    public void processRequest_givenValidExpectedValidOrder(){
+    public void processRequestType3(){
         Mockito.when(orderService.createOrder(Mockito.any())).thenReturn(order);
         OrderRequest orderRequest = OrderRequest.builder()
                                             .type(3).length(50067890)
@@ -48,7 +48,7 @@ public class EcommerceServiceTest {
     }
 
     @Test
-    public void processRequest_givenInValidLengthExpectedException(){
+    public void processRequestGivenInValidLengthExpectedException(){
         Mockito.when(orderService.createOrder(Mockito.any())).thenReturn(order);
         OrderRequest orderRequest = OrderRequest.builder()
                 .type(3).length(94)
@@ -60,7 +60,7 @@ public class EcommerceServiceTest {
 
 
     @Test
-    public void processRequest_getOrders(){
+    public void processRequestTypeOne(){
         Mockito.when(orderService.createOrder(Mockito.any())).thenReturn(order);
         OrderRequest orderRequest = OrderRequest.builder()
                 .type(1).length(4567)
@@ -72,7 +72,7 @@ public class EcommerceServiceTest {
     }
 
     @Test
-    public void processRequest_getOrderById(){
+    public void processRequestTypeTwo(){
         Mockito.when(orderService.createOrder(Mockito.any())).thenReturn(order);
         OrderRequest orderRequest = OrderRequest.builder()
                 .type(2).length(789)

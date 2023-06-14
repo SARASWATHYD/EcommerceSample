@@ -28,8 +28,6 @@ public class ProductServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-
-
     @Test
     public void givenProductIdReturnProduct() {
 
@@ -41,7 +39,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void addProduct_givenProductIdReturnProduct() {
+    public void addProductGivenProductIdReturnProduct() {
 
         Product product = new Product(456, "new", new BigDecimal(15),85, ProductType.BOOK);
         productService.addProduct(product);
@@ -52,14 +50,14 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void updateQuantity_givenProductIdReturnProduct_UnavailableProduct() {
+    public void updateQuantityGivenProductIdReturnProduct_UnavailableProduct() {
         Product  product = new Product(4567, "no", new BigDecimal(15),15, ProductType.BOOK);
         Assertions.assertThrows(IllegalArgumentException.class,()->productService.updateQuantity( new Order(12, List.of(product))),
                 "Product 4567 is not available");
     }
 
     @Test
-    public void updateQuantity_givenProductIdReturnProduct() {
+    public void updateQuantityGivenProductIdReturnProduct() {
         Product product = new Product(PRODUCT_ID, PRODUCT_NAME, new BigDecimal(115),15, ProductType.BOOK);
         productService.updateQuantity( new Order(12, List.of(product)));
         Product actualProduct= productService.getProduct(PRODUCT_ID);
@@ -71,7 +69,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void updateQuantity_givenProductIdReturnProduct_MaxQuantityProduct() {
+    public void updateQuantityGivenProductIdReturnProduct_MaxQuantityProduct() {
         Product orderedProduct = new Product(PRODUCT_ID, PRODUCT_NAME, new BigDecimal(115),90, ProductType.BOOK);
         Assertions.assertThrows(IllegalArgumentException.class,()->productService.updateQuantity( new Order(75, List.of(orderedProduct))),
                 "Ordered item Quantity are unavailable in stock");

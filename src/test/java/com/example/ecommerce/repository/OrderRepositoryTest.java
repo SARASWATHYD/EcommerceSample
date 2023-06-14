@@ -22,14 +22,14 @@ public class OrderRepositoryTest {
     }
 
     @Test
-    public void getAllOrdersReturnOrders(){
+    public void getAllOrdersReturnsOrders(){
         List<Order> orders = orderRepository.getAllOrders();
         Assertions.assertNotNull(orders);
         Assertions.assertEquals(0,orders.size());
     }
 
     @Test
-    public void getAllOrdersReturnValidOrders(){
+    public void getAllOrdersReturnsValidOrders(){
         Product product = new Product(1, "Juice",new BigDecimal(30),5, ProductType.BOOK);
         orderRepository.addOrder(new Order(123,List.of(product)));
         List<Order> orders = orderRepository.getAllOrders();
@@ -38,7 +38,7 @@ public class OrderRepositoryTest {
     }
 
     @Test
-    public void addOrdersReturnValidOrders(){
+    public void addOrdersReturnsValidOrders(){
         Product product = new Product(1, "Juice",new BigDecimal(30),5, ProductType.BOOK);
         Order order = new Order(123,List.of(product));
         orderRepository.addOrder(order);
@@ -48,7 +48,7 @@ public class OrderRepositoryTest {
     }
 
     @Test
-    public void getOrderByID_Invalid(){
+    public void getOrderByIDInvalid(){
         Order order = orderRepository.getOrderById(165);
         Assertions.assertNull(order);
     }

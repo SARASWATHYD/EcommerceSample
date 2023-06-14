@@ -48,7 +48,7 @@ public class EcommerceControllerTest {
     }
 
     @Test
-    public void createOrder_InvalidRequest() throws Exception{
+    public void givenNullStringAsPayloadReturnsInvalidRequest() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.post(PATH)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("null")
@@ -58,7 +58,7 @@ public class EcommerceControllerTest {
     }
 
     @Test
-    public void createOrder_InvalidRequestEmpty() throws Exception{
+    public void givenEmptyPayloadReturnsInvalidRequest() throws Exception{
 
         mockMvc.perform(MockMvcRequestBuilders.post(PATH)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -69,8 +69,8 @@ public class EcommerceControllerTest {
     }
 
     @Test
-    public void createOrder_WithNoProduct() throws Exception{
-        OrderRequest orderRequest =  OrderRequest.builder().type(2).length(5).order(new Order(75, new ArrayList<>())).build();
+    public void createOrderWithNoProduct() throws Exception{
+        OrderRequest orderRequest =  OrderRequest.builder().type(3).length(5).order(new Order(75, new ArrayList<>())).build();
         mockMvc.perform(MockMvcRequestBuilders.post(PATH)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(orderRequest))
@@ -80,7 +80,7 @@ public class EcommerceControllerTest {
     }
 
     private  OrderRequest  buildSampleOrderRequest(Product product) {
-        return OrderRequest.builder().type(2).length(5).order(new Order(75, List.of(product))).build();
+        return OrderRequest.builder().type(1).length(5).order(new Order(75, List.of(product))).build();
 
     }
 }

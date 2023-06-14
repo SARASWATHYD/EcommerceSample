@@ -42,7 +42,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void createOrder_givenCreateOrderReturnOrder(){
+    public void createOrderGivenCreateOrderReturnOrder(){
         Product orderedProduct = new Product(PRODUCT_ID, PRODUCT_NAME, new BigDecimal(115),10, ProductType.BOOK);
 
         Order order = orderService.createOrder(new Order(ORDER_ID+1, List.of(orderedProduct)));
@@ -54,7 +54,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void createOrder_givenCreateOrderReturnException_MaxQuantityOrder(){
+    public void createOrderGivenCreateOrderReturnException_MaxQuantityOrder(){
         Product orderedProduct = new Product(PRODUCT_ID, PRODUCT_NAME, new BigDecimal(115),90, ProductType.BOOK);
 
         Assertions.assertThrows(IllegalArgumentException.class,()->orderService.createOrder( new Order(75, List.of(orderedProduct))),
@@ -63,7 +63,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void createOrder_givenCreateOrderReturnException_InvalidProductId(){
+    public void createOrderGivenCreateOrderReturnException_InvalidProductId(){
 
         Product orderedProduct = new Product(PRODUCT_ID+20, PRODUCT_NAME, new BigDecimal(115),5, ProductType.BOOK);
 
@@ -73,7 +73,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void getOrder_givenCreateOrderReturnOrder(){
+    public void getOrderGivenCreateOrderReturnOrder(){
 
         Order order = orderService.getOrderDetails(1);
         Assertions.assertNotNull(order);
@@ -82,7 +82,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void getOrder_givenCreateOrderReturnException_InvalidOrder(){
+    public void getOrderGivenCreateOrderReturnException_InvalidOrder(){
 
         Assertions.assertThrows(IllegalArgumentException.class,()->orderService.getOrderDetails( 75),
                 "Order Not Found::75");
@@ -90,7 +90,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void getALLOrders_givenCreateOrderReturnOrder(){
+    public void getAllOrdersGivenCreateOrderReturnOrder(){
 
         List<Order> orders = orderService.getAllOrders();
         Assertions.assertNotNull(orders);

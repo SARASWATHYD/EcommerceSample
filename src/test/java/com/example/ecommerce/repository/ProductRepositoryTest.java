@@ -31,7 +31,7 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void getProductByID_Invalid(){
+    public void getProductByIDInvalid(){
         Product product = productRepository.getProductById(165);
         Assertions.assertNull(product);
     }
